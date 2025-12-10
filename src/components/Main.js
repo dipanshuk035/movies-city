@@ -6,7 +6,8 @@ import StarRating from "./StarRating.js";
 export default function Main({ movies, isLoading, message, query }) {
   const [watchedMovies, setWatchedMovies] = useState(function () {
     const data = localStorage.getItem("watched");
-    return JSON.parse(data);
+    if (data) return JSON.parse(data);
+    else return [];
   });
   const [selectedId, setSelectedId] = useState(null);
 
