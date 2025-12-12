@@ -44,7 +44,7 @@ function Note({ setBodyWidth }) {
         onClick={() => setBodyWidth((width) => 1100)}
         className="note-close"
       >
-        Continou
+        Continue
       </button>
     </div>
   );
