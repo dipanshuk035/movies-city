@@ -14,12 +14,23 @@ header {
   justify-content: space-around;
   align-items: center;
   margin-bottom: 20px;
+  height: 70px;
   background: radial-gradient(rgb(34, 65, 49), rgb(31, 60, 53));
 }
 
 main {
   display: flex;
 }
+
+input {
+  height: 20px;
+  width: 200px;
+  font-size: 15px;
+  padding: 10px;
+
+  border-radius: 15px;
+}
+
 section {
   /* display: grid; */
   align-items: center;
@@ -33,8 +44,10 @@ section {
 
 .logo-title {
   display: flex;
+
   width: 200px;
   align-items: center;
+
   justify-content: center;
 }
 
@@ -168,9 +181,43 @@ section {
   justify-content: center;
 }
 
-footer {
-  height: 80px;
+.searched-list-messege {
+  height: 50px;
+  margin-top: -10px;
+  text-align: center;
+  align-content: center;
+  font-size: 25px;
 
+  width: 40%;
+
+  z-index: 100;
+}
+
+.note {
+  /* position: absolute; */
+
+  height: 600px;
+  width: 85%;
+  transform: translate(15%, 30%);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  backdrop-filter: blur(30px);
+}
+
+.note-close {
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  height: 40px;
+  margin-top: 10px;
+  margin-left: 25%;
+  width: 100px;
+}
+
+footer {
+  height: 70px;
+  transform: translateY(20%);
   text-align: center;
   align-content: center;
   background: radial-gradient(rgb(34, 65, 49), rgb(24, 47, 41));

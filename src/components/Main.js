@@ -2,25 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import SearchedList from "./SearchedList.js";
 import WatchedList from "./WatchedList.js";
 import StarRating from "./StarRating.js";
+import { useLocalStorageState } from "../custom/useLocolStorageState.js";
+import { useKey } from "../custom/useKey.js";
 
 export default function Main({ movies, isLoading, message, query }) {
-  const [watchedMovies, setWatchedMovies] = useState(function () {
-    const data = localStorage.getItem("watched");
-    if (data) return JSON.parse(data);
-    else return [];
-  });
   const [selectedId, setSelectedId] = useState(null);
+
+  const [watchedMovies, setWatchedMovies] = useLocalStorageState([], "watched");
 
   function settingWatched(item) {
     setWatchedMovies([...watchedMovies, item]);
   }
-
-  useEffect(
-    function () {
-      localStorage.setItem("watched", JSON.stringify(watchedMovies));
-    },
-    [watchedMovies]
-  );
 
   useEffect(
     function () {
@@ -34,21 +26,10 @@ export default function Main({ movies, isLoading, message, query }) {
       <ListBox query={query} isLoading={isLoading}>
         {isLoading || (
           <h3
-            style={{
-              height: "50px",
-              marginTop: "-10px",
-              textAlign: "center",
-              alignContent: "center",
-              fontSize: "25px",
-
-              transform: `translateY(${query ? "0%" : "500%"})`,
-              width: "40%",
-              position: "fixed",
-              zIndex: "100",
-              backdropFilter: "blur(30px)",
-            }}
+            className="searchedListMessege"
+            style={{ transform: `translateY(${query ? "0% " : "600%"})` }}
           >
-            {query !== "" ? "Your Movies" : "Your movies will be hare..."}
+            {query !== "" ? "Your Movies" : "Search your favorite movies..."}
           </h3>
         )}
         {isLoading || movies === undefined ? (
@@ -133,7 +114,7 @@ function SelectedMovie({
           setIsLoading(true);
           setError("Loading...");
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=f28062cf&i=${selectedId}`
+            `https://www.omdbapi.com/?apikey=f28062cf&i=${selectedId}`
           );
           const data = await res.json();
 
@@ -159,6 +140,12 @@ function SelectedMovie({
     },
     [selectedMovie.Title]
   );
+
+  function onCloseMovie() {
+    setSelectedId(null);
+  }
+
+  useKey("Escape", onCloseMovie);
 
   return (
     <div className="selected-movie-details">

@@ -1,15 +1,9 @@
-import { useEffect, useState } from "react";
-import "./index.css";
-import Nav from "./components/Nav.js";
-import Main from "./components/Main.js";
-import Footer from "./components/Footer.js";
+import { useState, useEffect } from "react";
 
-export default function App() {
-  const [movies, setMovies] = useState([]);
-  const [query, setQuery] = useState("");
+export function useMovie(query) {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("Loading...");
-  //http://www.omdbapi.com/?apikey=[yourkey]&
+  const [movies, setMovies] = useState([]);
   useEffect(
     function () {
       const controller = new AbortController();
@@ -18,7 +12,7 @@ export default function App() {
           setIsLoading(true);
           setMessage("Loading...");
           const res = await fetch(
-            `https://www.omdbapi.com/?apikey=f28062cf&s=${query}`,
+            `https://www.omdbapi.com/?i=tt3896198&apikey=f28062cf&s=${query}`,
             { signal: controller.signal }
           );
 
@@ -46,18 +40,5 @@ export default function App() {
     [query]
   );
 
-  return (
-    <div>
-      <Nav query={query} setQuery={setQuery} />
-
-      <Main
-        movies={movies}
-        isLoading={isLoading}
-        message={message}
-        query={query}
-      />
-
-      <Footer />
-    </div>
-  );
+  return { isLoading, message, movies };
 }

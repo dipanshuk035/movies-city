@@ -1,11 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useKey } from "../custom/useKey";
 
 // import "./index.css";
-export default function Nav({ setQuery, query }) {
+export default function Nav({ setQuery, query, movies }) {
   return (
     <header>
       <LogoTitle />
-      <Search query={query} setQuery={setQuery} />
+      <Search query={query} setQuery={setQuery} movies={movies} />
     </header>
   );
 }
@@ -19,39 +20,34 @@ function LogoTitle() {
   );
 }
 
-function Search({ setQuery, query }) {
+function Search({ setQuery, query, movies }) {
   const inputEl = useRef(null);
 
-  useEffect(
-    function () {
-      function callback(e) {
-        if (e.code === "Enter") {
-          if (document.activeElement === inputEl.current) return;
-          inputEl.current.focus();
-          setQuery("");
-        }
-      }
-      document.addEventListener("keydown", callback);
+  function callback() {
+    if (document.activeElement === inputEl.current) return;
+    inputEl.current.focus();
+    setQuery("");
+  }
 
-      return document.addEventListener("keydown", callback);
-    },
-    [setQuery]
-  );
+  useKey("Enter", callback);
+
   return (
-    <input
+    <div
       style={{
-        height: "20px",
-        width: "200px",
-        fontSize: "15px",
-        padding: "10px",
-
-        borderRadius: "15px",
+        display: "flex",
+        gap: "20px",
+        alignItems: "center",
+        width: "400px",
       }}
-      type="text"
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
-      placeholder="Search your movie hare..."
-      ref={inputEl}
-    />
+    >
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search your movie hare..."
+        ref={inputEl}
+      />
+      <h3>{movies.length > 0 ? `${movies.length} Results` : " "}</h3>
+    </div>
   );
 }
