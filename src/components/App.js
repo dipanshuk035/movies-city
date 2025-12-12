@@ -41,7 +41,7 @@ function Note({ setBodyWidth }) {
       <h3>Note: This application is not suitable for your device</h3>
       <p>Please use Leptop/Desktop for best experience</p>
       <button
-        onClick={() => setBodyWidth((width) => 1000)}
+        onClick={() => setBodyWidth((width) => 1100)}
         className="note-close"
       >
         Continou
