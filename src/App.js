@@ -18,7 +18,7 @@ export default function App() {
           setIsLoading(true);
           setMessage("Loading...");
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=f28062cf&s=${query}`,
+            `https://www.omdbapi.com/?apikey=f28062cf&s=${query}`,
             { signal: controller.signal }
           );
 
