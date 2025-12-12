@@ -12,7 +12,7 @@ export default function StarRating({
     function () {
       setUserRating(rating);
     },
-    [rating]
+    [setUserRating, rating]
   );
   const containerStyle = {
     display: "flex",

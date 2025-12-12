@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import Nav from "./components/Nav.js";
 import Main from "./components/Main.js";
-import Footer from "./Footer.js";
+import Footer from "./components/Footer.js";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("Loading...");
-
+  //http://www.omdbapi.com/?apikey=[yourkey]&
   useEffect(
     function () {
       const controller = new AbortController();
@@ -18,7 +18,7 @@ export default function App() {
           setIsLoading(true);
           setMessage("Loading...");
           const res = await fetch(
-            `http://www.omdbapi.com/?i=tt3896198&apikey=f28062cf&s=${query}`,
+            `http://www.omdbapi.com/?apikey=f28062cf&s=${query}`,
             { signal: controller.signal }
           );
 

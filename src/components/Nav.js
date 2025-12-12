@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 // import "./index.css";
 export default function Nav({ setQuery, query }) {
   return (
@@ -18,6 +20,23 @@ function LogoTitle() {
 }
 
 function Search({ setQuery, query }) {
+  const inputEl = useRef(null);
+
+  useEffect(
+    function () {
+      function callback(e) {
+        if (e.code === "Enter") {
+          if (document.activeElement === inputEl.current) return;
+          inputEl.current.focus();
+          setQuery("");
+        }
+      }
+      document.addEventListener("keydown", callback);
+
+      return document.addEventListener("keydown", callback);
+    },
+    [setQuery]
+  );
   return (
     <input
       style={{
@@ -32,6 +51,7 @@ function Search({ setQuery, query }) {
       value={query}
       onChange={(e) => setQuery(e.target.value)}
       placeholder="Search your movie hare..."
+      ref={inputEl}
     />
   );
 }

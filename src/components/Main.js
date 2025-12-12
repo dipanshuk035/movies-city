@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SearchedList from "./SearchedList.js";
 import WatchedList from "./WatchedList.js";
 import StarRating from "./StarRating.js";
@@ -100,7 +100,16 @@ function SelectedMovie({
   const [userRating, setUserRating] = useState(0);
   const [error, setError] = useState("");
 
+  const countN = useRef(0);
+
   const isWatched = watchedMovies.find((movie) => movie.imdbID === selectedId);
+
+  useEffect(
+    function () {
+      if (userRating) countN.current++;
+    },
+    [userRating]
+  );
 
   function addingMovie() {
     const item = {
@@ -110,6 +119,7 @@ function SelectedMovie({
       imdbRating: selectedMovie.imdbRating,
       runtime: selectedMovie.Runtime,
       userRating: userRating,
+      userDisisionCount: countN.current,
     };
 
     settingWatched(item);
